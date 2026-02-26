@@ -1,0 +1,41 @@
+{
+  "name": "axios-devtools",
+  "version": "2.0.0",
+  "description": "Professional MCP server for advanced API requests using Axios",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BraynerG/axios-devtools"
+  },
+  "keywords": [
+    "LLM",
+    "AI",
+    "MCP",
+    "fetch",
+    "axios",
+    "api",
+    "SOLID",
+    "Clean Architecture",
+    "TypeScript"
+  ],
+  "author": "BraynerG (github.com/BraynerG)",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "axios": "^1.13.5"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/node": "^25.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

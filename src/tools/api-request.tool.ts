@@ -65,6 +65,38 @@ export class ApiRequestTool extends BaseTool {
   }
 
   async execute(args: any): Promise<any> {
+    const { url, baseUrl } = args;
+    const restrictedBaseUrl = process.env.API_BASE_URL;
+
+    if (restrictedBaseUrl) {
+      // If baseUrl is provided, it must match or be a subpath of restrictedBaseUrl
+      if (baseUrl && baseUrl !== restrictedBaseUrl) {
+        return {
+          content: [{
+            type: "text",
+            text: `Unallowed URL: The provided baseUrl "${baseUrl}" does not match the restricted API_BASE_URL set in the environment.`
+          }],
+          isError: true
+        };
+      }
+
+      // 2. If url is absolute, it must start with restrictedBaseUrl
+      try {
+        const isAbsoluteUrl = /^(?:[a-z+.-]+:)?\/\//i.test(url);
+        if (isAbsoluteUrl && !url.startsWith(restrictedBaseUrl)) {
+          return {
+            content: [{
+              type: "text",
+              text: `Unallowed URL: The provided absolute URL "${url}" does not match the restricted API_BASE_URL "${restrictedBaseUrl}" set in the environment.`
+            }],
+            isError: true
+          };
+        }
+      } catch (e) {
+        // Fallback for edge cases, though simple string check is usually enough for prefixing
+      }
+    }
+
     const config = this.prepareConfig(args);
     return await this.httpClient.request(config);
   }
